@@ -6,6 +6,8 @@ const bodyParser = require('body-parser')
 const postDB = require('./database/models/Posts');
 const fileUpload = require('express-fileupload');
 
+const storeMiddleware = require('./middleware/storeController');
+
 const aboutController = require('./controller/aboutController');
 const contactController = require('./controller/contactController');
 const createController = require('./controller/createController')
@@ -20,6 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(fileUpload());
 app.set('views', `${__dirname}/views`);
+app.use('/posts/store',storeMiddleware);
 
 app.get('/',indexController);
 app.get('/about',aboutController);
