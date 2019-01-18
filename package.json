@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/adityamudgil2505/Web_Project11_Website#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-edge": "^1.0.0",
+    "express-fileupload": "^1.1.1-alpha.1",
     "mongoose": "^5.4.3"
   },
   "devDependencies": {
