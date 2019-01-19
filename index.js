@@ -14,6 +14,8 @@ const createController = require('./controller/createController')
 const postController = require('./controller/postController');
 const indexController = require('./controller/indexController');
 const storeController = require('./controller/storeController');
+const storeUserController = require('./controller/storeUserController');
+const registerController = require('./controller/registerController');
 
 mongoose.connect('mongodb://localhost/node-js-test-node');
 app.use(express.static('public'));
@@ -29,5 +31,7 @@ app.get('/about',aboutController);
 app.get('/contact',contactController);
 app.get('/posts/new',createController);
 app.get('/post/:id',postController);
+app.get('/auth/register',registerController);
 app.post('/posts/store',storeController);
+app.post('/user/register',storeUserController);
 app.listen(5500);
