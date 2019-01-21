@@ -7,6 +7,7 @@ const postDB = require('./database/models/Posts');
 const fileUpload = require('express-fileupload');
 const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
+const edge = require('edge.js');
 const mongoStore = connectMongo(expressSession);
 
 const storeMiddleware = require('./middleware/storeController');
@@ -21,6 +22,7 @@ const storeUserController = require('./controller/storeUserController');
 const registerController = require('./controller/registerController');
 const loginController = require('./controller/loginController');
 const loginUserController = require('./controller/loginUserController');
+const logoutController = require('./controller/logoutController');
 const auth = require('./middleware/authController');
 const ifAuth = require('./middleware/redirectIfAuth');
 
@@ -38,6 +40,10 @@ app.use(expressSession({
     mongooseConnection: mongoose.connection
   })
 }));
+app.use('*',(req, res, next)=>{
+  edge.global('auth', req.session.userId);
+  next();
+})
 
 app.get('/',indexController);
 app.get('/about',aboutController);
@@ -49,4 +55,5 @@ app.get('/auth/login',ifAuth ,loginController);
 app.post('/posts/store',auth, storeController);
 app.post('/user/register',ifAuth ,storeUserController);
 app.post('/user/login',ifAuth ,loginUserController);
+app.get('/auth/logout', logoutController);
 app.listen(5500);
