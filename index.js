@@ -55,5 +55,6 @@ app.get('/auth/login',ifAuth ,loginController);
 app.post('/posts/store',auth, storeController);
 app.post('/user/register',ifAuth ,storeUserController);
 app.post('/user/login',ifAuth ,loginUserController);
-app.get('/auth/logout', logoutController);
+app.get('/auth/logout',auth, logoutController);
+app.use((req,res)=>res.render('notFound'));   //404 not found
 app.listen(5500);

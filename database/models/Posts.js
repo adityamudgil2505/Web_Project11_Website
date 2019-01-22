@@ -8,7 +8,12 @@ const postSchema = mongoose.Schema({
     type: Date,
     default: new Date()
   },
-  username: String
+  username: String,
+  author:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    require: true
+  }
 });
 
 const post = mongoose.model('Post',postSchema);
