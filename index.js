@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
 const expressEdge = require('express-edge');
@@ -26,7 +27,7 @@ const logoutController = require('./controller/logoutController');
 const auth = require('./middleware/authController');
 const ifAuth = require('./middleware/redirectIfAuth');
 
-mongoose.connect('mongodb://localhost/node-js-test-node');
+mongoose.connect(process.env.DB_URL);
 app.use(express.static('public'));
 app.use(expressEdge);
 app.use(bodyParser.json());
@@ -35,7 +36,7 @@ app.use(fileUpload());
 app.set('views', `${__dirname}/views`);
 app.use('/posts/store',storeMiddleware);
 app.use(expressSession({
-  secret: 'secret',
+  secret: process.env.EXPRESS_SESSION_KEY,
   store: new mongoStore({
     mongooseConnection: mongoose.connection
   })
@@ -57,4 +58,4 @@ app.post('/user/register',ifAuth ,storeUserController);
 app.post('/user/login',ifAuth ,loginUserController);
 app.get('/auth/logout',auth, logoutController);
 app.use((req,res)=>res.render('notFound'));   //404 not found
-app.listen(5500);
+app.listen(process.env.PORT);
